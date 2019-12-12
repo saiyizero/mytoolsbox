@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+
+
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>账单分析</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 账单管理 <span class="c-gray en">&gt;</span> 账单分析 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <table class="table table-border table-bordered table-bg mt-20">
+        <thead>
+        <tr>
+            <th colspan="6" scope="col"><span id="showMonth" th:text="${showMonth}"></span>月分析：
+                <input id="tranDate" type="hidden" th:value="${analysData.tranDate}" />
+                <a title="执行分析" href="javascript:;" onclick="analysData();" class="ml-5" style="text-decoration:none;float:right;">
+                    执行分析	<i class="Hui-iconfont">&#xe67e;</i>
+                </a>
+                <span style="float:right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                <a title="修改数据" href="javascript:;" onclick="layer_show('修改数据','sumgets-edit.html','400','280');" class="ml-5" style="text-decoration:none;float:right;">
+                    <i class="Hui-iconfont">&#xe6df;</i> 修改数据
+                </a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th width="15%">总收入：<span th:text="${analysData.sumsGets}"></span></th>
+            <th colspan="2" scope="col">信用支出：<span th:text="${analysData.critPays}"></span></th>
+            <th colspan="3" scope="col">储蓄支出：<span th:text="${analysData.savePays}"></span></th>
+        </tr>
+        <tr>
+            <th>总支出：<span id="sumsPays" th:text="${analysData.sumsPays}"></span></th>
+            <td>伙食费：<span id="foodPays" th:text="${analysData.foodPays}"></span></td>
+            <td>交通费：<span id="trafPays" th:text="${analysData.trafPays}"></span></td>
+            <td>大宗消费：<span id="tbigPays" th:text="${analysData.tbigPays}"></span></td>
+            <td>购物：<span id="shopPays" th:text="${analysData.shopPays}"></span></td>
+            <td>生活费：<span id="liftPays" th:text="${analysData.liftPays}"></span></td>
+        </tr>
+        <tr>
+            <th>净利润：<span id="tnetProf"  th:text="${analysData.tnetProf}"></span></th>
+            <td>房租：<span id="housPays"  th:text="${analysData.housPays}"></span></td>
+            <td>还款：<span id="tpayBack"  th:text="${analysData.tpayBack}"></span> </td>
+            <td>娱乐消费：<span id="playPays"  th:text="${analysData.playPays}"></span></td>
+            <td>其他消费：<span id="othrPays" th:text="${analysData.othrPays}"></span></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="page-container">
+    <div id="container" style="min-width:700px;height:400px"></div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+<script type="text/javascript" src="localJs/public.js"></script>
+<script type="text/javascript" src="localJs/account.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var showMonth=$("#showMonth").html();
+
+        var mycars=new Array();
+
+        var foodPays=$("#foodPays").html();
+        if(foodPays!=null&&foodPays!=0&&foodPays!=""){
+            foodPays=parseFloat(foodPays);
+            mycars.push(['伙食费',foodPays]);
+        }
+
+        var trafPays=$("#trafPays").html();
+        if(trafPays!=null&&trafPays!=0&&trafPays!=""){
+            trafPays=parseFloat(trafPays);
+            mycars.push(['交通费',trafPays]);
+        }
+
+        var shopPays=$("#shopPays").html();
+        if(shopPays!=null&&shopPays!=0&&shopPays!=""){
+            shopPays=parseFloat(shopPays);
+            mycars.push(['购物',shopPays]);
+        }
+
+        var playPays=$("#playPays").html();
+        if(playPays!=null&&playPays!=0&&playPays!=""){
+            playPays=parseFloat(playPays);
+            mycars.push(['娱乐消费',playPays]);
+        }
+
+        var tbigPays=$("#tbigPays").html();
+        if(tbigPays!=null&&tbigPays!=0&&tbigPays!=""){
+            tbigPays=parseFloat(tbigPays);
+            mycars.push(['大宗消费',tbigPays]);
+        }
+
+        var housPays=$("#housPays").html();
+        if(housPays!=null&&housPays!=0&&housPays!=NaN){
+            housPays=parseFloat(housPays);
+            mycars.push(['房租',housPays]);
+        }
+
+        var tpayBack=$("#tpayBack").html();
+        if(tpayBack!=null&&tpayBack!=0&&tpayBack!=""){
+            tpayBack=parseFloat(tpayBack);
+            mycars.push(['还款',tpayBack]);
+        }
+
+        var liftPays=$("#liftPays").html();
+        if(liftPays!=null&&liftPays!=0&&liftPays!=""){
+            liftPays=parseFloat(liftPays);
+            mycars.push(['生活费',liftPays]);
+        }
+
+        var othrPays=$("#othrPays").html();
+        if(othrPays!=null&&othrPays!=0&&othrPays!=""){
+            othrPays=parseFloat(othrPays);
+            mycars.push(['其他消费',othrPays]);
+        }
+
+        var tnetProf=$("#tnetProf").html();
+        if(tnetProf!=null&&tnetProf!=0&&tnetProf!=""){
+            tnetProf=parseFloat(tnetProf);
+            mycars.push(['净利润',tnetProf]);
+        }
+
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '2019年 '+showMonth+'月份消费统计分析'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                data: mycars
+            }]
+        });
+    });
+
+
+</script>
+</body>
+</html>

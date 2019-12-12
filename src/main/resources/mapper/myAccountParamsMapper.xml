@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.virugan.mytoolsbox.mapper.myAccountParamsMapper" >
+  <resultMap id="BaseResultMap" type="com.virugan.mytoolsbox.entry.myAccountParams" >
+    <result column="cols_numb" property="colsNumb" jdbcType="INTEGER" />
+    <result column="para_type" property="paraType" jdbcType="VARCHAR" />
+    <result column="sqls_name" property="sqlsName" jdbcType="VARCHAR" />
+    <result column="sqls_valu" property="sqlsValu" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cols_numb, para_type, sqls_name, sqls_valu
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.virugan.mytoolsbox.entry.myAccountParamsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myaccount_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountParamsExample" >
+    delete from myaccount_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.virugan.mytoolsbox.entry.myAccountParams" >
+    insert into myaccount_params (cols_numb, para_type, sqls_name, 
+      sqls_valu)
+    values (#{colsNumb,jdbcType=INTEGER}, #{paraType,jdbcType=VARCHAR}, #{sqlsName,jdbcType=VARCHAR}, 
+      #{sqlsValu,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.virugan.mytoolsbox.entry.myAccountParams" >
+    insert into myaccount_params
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="colsNumb != null" >
+        cols_numb,
+      </if>
+      <if test="paraType != null" >
+        para_type,
+      </if>
+      <if test="sqlsName != null" >
+        sqls_name,
+      </if>
+      <if test="sqlsValu != null" >
+        sqls_valu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="colsNumb != null" >
+        #{colsNumb,jdbcType=INTEGER},
+      </if>
+      <if test="paraType != null" >
+        #{paraType,jdbcType=VARCHAR},
+      </if>
+      <if test="sqlsName != null" >
+        #{sqlsName,jdbcType=VARCHAR},
+      </if>
+      <if test="sqlsValu != null" >
+        #{sqlsValu,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountParamsExample" resultType="java.lang.Integer" >
+    select count(*) from myaccount_params
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update myaccount_params
+    <set >
+      <if test="record.colsNumb != null" >
+        cols_numb = #{record.colsNumb,jdbcType=INTEGER},
+      </if>
+      <if test="record.paraType != null" >
+        para_type = #{record.paraType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sqlsName != null" >
+        sqls_name = #{record.sqlsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sqlsValu != null" >
+        sqls_valu = #{record.sqlsValu,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update myaccount_params
+    set cols_numb = #{record.colsNumb,jdbcType=INTEGER},
+      para_type = #{record.paraType,jdbcType=VARCHAR},
+      sqls_name = #{record.sqlsName,jdbcType=VARCHAR},
+      sqls_valu = #{record.sqlsValu,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="executeSql" parameterType="java.lang.String" >
+    ${value}
+  </update>
+</mapper>

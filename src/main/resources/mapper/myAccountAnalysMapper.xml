@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.virugan.mytoolsbox.mapper.myAccountAnalysMapper" >
+  <resultMap id="BaseResultMap" type="com.virugan.mytoolsbox.entry.myAccountAnalys" >
+    <result column="tran_date" property="tranDate" jdbcType="VARCHAR" />
+    <result column="sums_gets" property="sumsGets" jdbcType="VARCHAR" />
+    <result column="sums_pays" property="sumsPays" jdbcType="VARCHAR" />
+    <result column="crit_pays" property="critPays" jdbcType="VARCHAR" />
+    <result column="save_pays" property="savePays" jdbcType="VARCHAR" />
+    <result column="food_pays" property="foodPays" jdbcType="VARCHAR" />
+    <result column="traf_pays" property="trafPays" jdbcType="VARCHAR" />
+    <result column="tbig_pays" property="tbigPays" jdbcType="VARCHAR" />
+    <result column="tnet_prof" property="tnetProf" jdbcType="VARCHAR" />
+    <result column="hous_pays" property="housPays" jdbcType="VARCHAR" />
+    <result column="tpay_back" property="tpayBack" jdbcType="VARCHAR" />
+    <result column="play_pays" property="playPays" jdbcType="VARCHAR" />
+    <result column="shop_pays" property="shopPays" jdbcType="VARCHAR" />
+    <result column="lift_pays" property="liftPays" jdbcType="VARCHAR" />
+    <result column="othr_pays" property="othrPays" jdbcType="VARCHAR" />
+    <result column="chck_flag" property="chckFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tran_date, sums_gets, sums_pays, crit_pays, save_pays, food_pays, traf_pays, tbig_pays, 
+    tnet_prof, hous_pays, tpay_back, play_pays, shop_pays, lift_pays, othr_pays, chck_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.virugan.mytoolsbox.entry.myAccountAnalysExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myaccount_analys
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountAnalysExample" >
+    delete from myaccount_analys
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.virugan.mytoolsbox.entry.myAccountAnalys" >
+    insert into myaccount_analys (tran_date, sums_gets, sums_pays, 
+      crit_pays, save_pays, food_pays, 
+      traf_pays, tbig_pays, tnet_prof, 
+      hous_pays, tpay_back, play_pays, 
+      shop_pays, lift_pays, othr_pays, 
+      chck_flag)
+    values (#{tranDate,jdbcType=VARCHAR}, #{sumsGets,jdbcType=VARCHAR}, #{sumsPays,jdbcType=VARCHAR}, 
+      #{critPays,jdbcType=VARCHAR}, #{savePays,jdbcType=VARCHAR}, #{foodPays,jdbcType=VARCHAR}, 
+      #{trafPays,jdbcType=VARCHAR}, #{tbigPays,jdbcType=VARCHAR}, #{tnetProf,jdbcType=VARCHAR}, 
+      #{housPays,jdbcType=VARCHAR}, #{tpayBack,jdbcType=VARCHAR}, #{playPays,jdbcType=VARCHAR}, 
+      #{shopPays,jdbcType=VARCHAR}, #{liftPays,jdbcType=VARCHAR}, #{othrPays,jdbcType=VARCHAR}, 
+      #{chckFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.virugan.mytoolsbox.entry.myAccountAnalys" >
+    insert into myaccount_analys
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tranDate != null" >
+        tran_date,
+      </if>
+      <if test="sumsGets != null" >
+        sums_gets,
+      </if>
+      <if test="sumsPays != null" >
+        sums_pays,
+      </if>
+      <if test="critPays != null" >
+        crit_pays,
+      </if>
+      <if test="savePays != null" >
+        save_pays,
+      </if>
+      <if test="foodPays != null" >
+        food_pays,
+      </if>
+      <if test="trafPays != null" >
+        traf_pays,
+      </if>
+      <if test="tbigPays != null" >
+        tbig_pays,
+      </if>
+      <if test="tnetProf != null" >
+        tnet_prof,
+      </if>
+      <if test="housPays != null" >
+        hous_pays,
+      </if>
+      <if test="tpayBack != null" >
+        tpay_back,
+      </if>
+      <if test="playPays != null" >
+        play_pays,
+      </if>
+      <if test="shopPays != null" >
+        shop_pays,
+      </if>
+      <if test="liftPays != null" >
+        lift_pays,
+      </if>
+      <if test="othrPays != null" >
+        othr_pays,
+      </if>
+      <if test="chckFlag != null" >
+        chck_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tranDate != null" >
+        #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sumsGets != null" >
+        #{sumsGets,jdbcType=VARCHAR},
+      </if>
+      <if test="sumsPays != null" >
+        #{sumsPays,jdbcType=VARCHAR},
+      </if>
+      <if test="critPays != null" >
+        #{critPays,jdbcType=VARCHAR},
+      </if>
+      <if test="savePays != null" >
+        #{savePays,jdbcType=VARCHAR},
+      </if>
+      <if test="foodPays != null" >
+        #{foodPays,jdbcType=VARCHAR},
+      </if>
+      <if test="trafPays != null" >
+        #{trafPays,jdbcType=VARCHAR},
+      </if>
+      <if test="tbigPays != null" >
+        #{tbigPays,jdbcType=VARCHAR},
+      </if>
+      <if test="tnetProf != null" >
+        #{tnetProf,jdbcType=VARCHAR},
+      </if>
+      <if test="housPays != null" >
+        #{housPays,jdbcType=VARCHAR},
+      </if>
+      <if test="tpayBack != null" >
+        #{tpayBack,jdbcType=VARCHAR},
+      </if>
+      <if test="playPays != null" >
+        #{playPays,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPays != null" >
+        #{shopPays,jdbcType=VARCHAR},
+      </if>
+      <if test="liftPays != null" >
+        #{liftPays,jdbcType=VARCHAR},
+      </if>
+      <if test="othrPays != null" >
+        #{othrPays,jdbcType=VARCHAR},
+      </if>
+      <if test="chckFlag != null" >
+        #{chckFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountAnalysExample" resultType="java.lang.Integer" >
+    select count(*) from myaccount_analys
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update myaccount_analys
+    <set >
+      <if test="record.tranDate != null" >
+        tran_date = #{record.tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumsGets != null" >
+        sums_gets = #{record.sumsGets,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumsPays != null" >
+        sums_pays = #{record.sumsPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.critPays != null" >
+        crit_pays = #{record.critPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.savePays != null" >
+        save_pays = #{record.savePays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodPays != null" >
+        food_pays = #{record.foodPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trafPays != null" >
+        traf_pays = #{record.trafPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tbigPays != null" >
+        tbig_pays = #{record.tbigPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tnetProf != null" >
+        tnet_prof = #{record.tnetProf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.housPays != null" >
+        hous_pays = #{record.housPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tpayBack != null" >
+        tpay_back = #{record.tpayBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playPays != null" >
+        play_pays = #{record.playPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPays != null" >
+        shop_pays = #{record.shopPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liftPays != null" >
+        lift_pays = #{record.liftPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.othrPays != null" >
+        othr_pays = #{record.othrPays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chckFlag != null" >
+        chck_flag = #{record.chckFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update myaccount_analys
+    set tran_date = #{record.tranDate,jdbcType=VARCHAR},
+      sums_gets = #{record.sumsGets,jdbcType=VARCHAR},
+      sums_pays = #{record.sumsPays,jdbcType=VARCHAR},
+      crit_pays = #{record.critPays,jdbcType=VARCHAR},
+      save_pays = #{record.savePays,jdbcType=VARCHAR},
+      food_pays = #{record.foodPays,jdbcType=VARCHAR},
+      traf_pays = #{record.trafPays,jdbcType=VARCHAR},
+      tbig_pays = #{record.tbigPays,jdbcType=VARCHAR},
+      tnet_prof = #{record.tnetProf,jdbcType=VARCHAR},
+      hous_pays = #{record.housPays,jdbcType=VARCHAR},
+      tpay_back = #{record.tpayBack,jdbcType=VARCHAR},
+      play_pays = #{record.playPays,jdbcType=VARCHAR},
+      shop_pays = #{record.shopPays,jdbcType=VARCHAR},
+      lift_pays = #{record.liftPays,jdbcType=VARCHAR},
+      othr_pays = #{record.othrPays,jdbcType=VARCHAR},
+      chck_flag = #{record.chckFlag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

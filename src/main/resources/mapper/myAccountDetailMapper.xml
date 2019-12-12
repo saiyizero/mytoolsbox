@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.virugan.mytoolsbox.mapper.myAccountDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.virugan.mytoolsbox.entry.myAccountDetail" >
+    <result column="cols_numb" property="colsNumb" jdbcType="INTEGER" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <result column="tran_date" property="tranDate" jdbcType="VARCHAR" />
+    <result column="tran_time" property="tranTime" jdbcType="VARCHAR" />
+    <result column="tran_type" property="tranType" jdbcType="VARCHAR" />
+    <result column="tran_objt" property="tranObjt" jdbcType="VARCHAR" />
+    <result column="tran_good" property="tranGood" jdbcType="VARCHAR" />
+    <result column="tran_dict" property="tranDict" jdbcType="VARCHAR" />
+    <result column="tran_amts" property="tranAmts" jdbcType="FLOAT" />
+    <result column="payt_nums" property="paytNums" jdbcType="VARCHAR" />
+    <result column="tran_flag" property="tranFlag" jdbcType="VARCHAR" />
+    <result column="tran_numb" property="tranNumb" jdbcType="VARCHAR" />
+    <result column="objt_numb" property="objtNumb" jdbcType="VARCHAR" />
+    <result column="item_type" property="itemType" jdbcType="VARCHAR" />
+    <result column="grop_type" property="gropType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cols_numb, file_name, file_type, tran_date, tran_time, tran_type, tran_objt, tran_good,
+    tran_dict, tran_amts, payt_nums, tran_flag, tran_numb, objt_numb, item_type, grop_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.virugan.mytoolsbox.entry.myAccountDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myaccount_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountDetailExample" >
+    delete from myaccount_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.virugan.mytoolsbox.entry.myAccountDetail" >
+    insert into myaccount_detail (cols_numb, file_name, file_type,
+      tran_date, tran_time, tran_type,
+      tran_objt, tran_good, tran_dict,
+      tran_amts, payt_nums, tran_flag,
+      tran_numb, objt_numb, item_type,
+      grop_type)
+    values (#{colsNumb,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR},
+      #{tranDate,jdbcType=VARCHAR}, #{tranTime,jdbcType=VARCHAR}, #{tranType,jdbcType=VARCHAR},
+      #{tranObjt,jdbcType=VARCHAR}, #{tranGood,jdbcType=VARCHAR}, #{tranDict,jdbcType=VARCHAR},
+      #{tranAmts,jdbcType=FLOAT}, #{paytNums,jdbcType=VARCHAR}, #{tranFlag,jdbcType=VARCHAR},
+      #{tranNumb,jdbcType=VARCHAR}, #{objtNumb,jdbcType=VARCHAR}, #{itemType,jdbcType=VARCHAR},
+      #{gropType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.virugan.mytoolsbox.entry.myAccountDetail" >
+    insert into myaccount_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="colsNumb != null" >
+        cols_numb,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="tranDate != null" >
+        tran_date,
+      </if>
+      <if test="tranTime != null" >
+        tran_time,
+      </if>
+      <if test="tranType != null" >
+        tran_type,
+      </if>
+      <if test="tranObjt != null" >
+        tran_objt,
+      </if>
+      <if test="tranGood != null" >
+        tran_good,
+      </if>
+      <if test="tranDict != null" >
+        tran_dict,
+      </if>
+      <if test="tranAmts != null" >
+        tran_amts,
+      </if>
+      <if test="paytNums != null" >
+        payt_nums,
+      </if>
+      <if test="tranFlag != null" >
+        tran_flag,
+      </if>
+      <if test="tranNumb != null" >
+        tran_numb,
+      </if>
+      <if test="objtNumb != null" >
+        objt_numb,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="gropType != null" >
+        grop_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="colsNumb != null" >
+        #{colsNumb,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDate != null" >
+        #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tranTime != null" >
+        #{tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tranType != null" >
+        #{tranType,jdbcType=VARCHAR},
+      </if>
+      <if test="tranObjt != null" >
+        #{tranObjt,jdbcType=VARCHAR},
+      </if>
+      <if test="tranGood != null" >
+        #{tranGood,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDict != null" >
+        #{tranDict,jdbcType=VARCHAR},
+      </if>
+      <if test="tranAmts != null" >
+        #{tranAmts,jdbcType=FLOAT},
+      </if>
+      <if test="paytNums != null" >
+        #{paytNums,jdbcType=VARCHAR},
+      </if>
+      <if test="tranFlag != null" >
+        #{tranFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tranNumb != null" >
+        #{tranNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="objtNumb != null" >
+        #{objtNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="gropType != null" >
+        #{gropType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.virugan.mytoolsbox.entry.myAccountDetailExample" resultType="java.lang.Integer" >
+    select count(*) from myaccount_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update myaccount_detail
+    <set >
+      <if test="record.colsNumb != null" >
+        cols_numb = #{record.colsNumb,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileName != null" >
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null" >
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranDate != null" >
+        tran_date = #{record.tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranTime != null" >
+        tran_time = #{record.tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranType != null" >
+        tran_type = #{record.tranType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranObjt != null" >
+        tran_objt = #{record.tranObjt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranGood != null" >
+        tran_good = #{record.tranGood,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranDict != null" >
+        tran_dict = #{record.tranDict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranAmts != null" >
+        tran_amts = #{record.tranAmts,jdbcType=FLOAT},
+      </if>
+      <if test="record.paytNums != null" >
+        payt_nums = #{record.paytNums,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranFlag != null" >
+        tran_flag = #{record.tranFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranNumb != null" >
+        tran_numb = #{record.tranNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objtNumb != null" >
+        objt_numb = #{record.objtNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemType != null" >
+        item_type = #{record.itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gropType != null" >
+        grop_type = #{record.gropType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update myaccount_detail
+    set cols_numb = #{record.colsNumb,jdbcType=INTEGER},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_type = #{record.fileType,jdbcType=VARCHAR},
+      tran_date = #{record.tranDate,jdbcType=VARCHAR},
+      tran_time = #{record.tranTime,jdbcType=VARCHAR},
+      tran_type = #{record.tranType,jdbcType=VARCHAR},
+      tran_objt = #{record.tranObjt,jdbcType=VARCHAR},
+      tran_good = #{record.tranGood,jdbcType=VARCHAR},
+      tran_dict = #{record.tranDict,jdbcType=VARCHAR},
+      tran_amts = #{record.tranAmts,jdbcType=FLOAT},
+      payt_nums = #{record.paytNums,jdbcType=VARCHAR},
+      tran_flag = #{record.tranFlag,jdbcType=VARCHAR},
+      tran_numb = #{record.tranNumb,jdbcType=VARCHAR},
+      objt_numb = #{record.objtNumb,jdbcType=VARCHAR},
+      item_type = #{record.itemType,jdbcType=VARCHAR},
+      grop_type = #{record.gropType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="selectSumAmtsByExample" resultType="BigDecimal" parameterType="String" >
+    select ifnull(sum(case when tran_dict='借' then tran_amts else -tran_amts end ),0) from myaccount_detail where ${sql}
+  </select>
+
+  <select id="selectSumAmtsByExampleGroup" resultType="Map" parameterType="String" >
+    select ifnull(sum(case when tran_dict='借' then tran_amts else -tran_amts end ),0) as tran_amts,ifnull(grop_type,'未处理') as grop_type from myaccount_detail where ${sql} group by grop_type
+  </select>
+
+  <select id="selectByNameSql" resultMap="BaseResultMap" parameterType="String" >
+    select
+        <include refid="Base_Column_List" />
+    from myaccount_detail where ${sql}
+  </select>
+</mapper>
